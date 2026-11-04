@@ -19,7 +19,7 @@ window.SITE_CONFIG = {
     { title: "Offline-first", text: "Everything works without a connection." }
   ],
   contact: {
-    email: "contact@example.com",
+    email: "offlinetoolsstudio@gmail.com",
     social: [
       // { label: "GitHub", url: "https://github.com/offlinetoolsstudio" },
       // { label: "X", url: "https://x.com/yourhandle" }
