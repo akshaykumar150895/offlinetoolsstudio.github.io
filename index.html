@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Offline Tools Studio</title>
+<meta name="description" content="Offline Tools Studio – independent developer of simple, privacy-conscious, offline-first apps.">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<script src="config.js"></script>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <img class="logo" src="assets/logo.svg" alt="Offline Tools Studio logo">
+    <h1 data-text="name">Offline Tools Studio</h1>
+    <p class="tagline" data-text="tagline">Simple, useful apps that work without the internet.</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <section id="about">
+    <h2>About us</h2>
+    <p data-text="about">Offline Tools Studio is an independent app development studio.</p>
+  </section>
+
+  <section id="apps">
+    <h2>Our Apps</h2>
+    <div class="card app">
+      <img id="app-icon" src="assets/pdf-converter-icon.svg" alt="PDF Converter – Offline icon">
+      <div>
+        <h3 id="app-name">PDF Converter – Offline</h3>
+        <p id="app-desc"></p>
+        <a class="btn" id="app-link" href="#">Get it on Google Play</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="philosophy">
+    <h2>Our philosophy</h2>
+    <div class="grid" id="philosophy-list"></div>
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <p id="contact-email" hidden>Email: <a id="email-link" href="#"></a></p>
+    <div class="links" id="social-links"></div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span id="copyright"></span>
+    <span id="privacy" hidden> · <a id="privacy-link" href="#">Privacy Policy</a></span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var c = window.SITE_CONFIG || {}, $ = function (id) { return document.getElementById(id); };
+  document.querySelectorAll("[data-text]").forEach(function (el) {
+    if (c[el.dataset.text]) el.textContent = c[el.dataset.text];
+  });
+  if (c.name) document.title = c.name;
+  var a = c.app || {};
+  if (a.name) $("app-name").textContent = a.name;
+  if (a.icon) $("app-icon").src = a.icon;
+  $("app-desc").textContent = a.description || "";
+  $("app-link").href = a.googlePlayUrl || "#";
+  (c.philosophy || []).forEach(function (p) {
+    var d = document.createElement("div"); d.className = "card";
+    var s = document.createElement("strong"); s.textContent = p.title;
+    var t = document.createElement("span"); t.textContent = p.text;
+    d.append(s, t); $("philosophy-list").appendChild(d);
+  });
+  var ct = c.contact || {};
+  if (ct.email) {
+    $("contact-email").hidden = false;
+    $("email-link").href = "mailto:" + ct.email;
+    $("email-link").textContent = ct.email;
+  }
+  (ct.social || []).forEach(function (s) {
+    var l = document.createElement("a");
+    l.href = s.url; l.textContent = s.label; l.rel = "noopener";
+    $("social-links").appendChild(l);
+  });
+  $("copyright").textContent = "© " + new Date().getFullYear() + " " + (c.name || "");
+  if (c.privacyPolicyUrl) { $("privacy").hidden = false; $("privacy-link").href = c.privacyPolicyUrl; }
+})();
+</script>
+</body>
+</html>
